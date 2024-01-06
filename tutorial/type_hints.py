@@ -71,11 +71,20 @@ class User(BaseModel):
     friends: list[int] = []
 
 
+# Data with conversion types
+# external_data = {
+#     "id": "123",
+#     "signup_ts": "2017-06-01 12:22",
+#     "friends": [1, "2", b"3"]
+# }
+
+# Data with correct types
 external_data = {
-    "id": "123",
-    "signup_ts": "2017-06-01 12:22",
-    "friends": [1, "2", b"3"]
+    "id": 123,  # int, not str
+    "signup_ts": "2017-06-01 12:22",  # str is fine, Pydantic will convert it to datetime
+    "friends": [1, 2, 3]  # all ints, not mixed types
 }
+
 user = User(**external_data)
 print(user)  # id=123 name='John Doe' signup_ts=datetime.datetime(2017, 6, 1, 12, 22) friends=[1, 2, 3]
 print(user.id) # 123
